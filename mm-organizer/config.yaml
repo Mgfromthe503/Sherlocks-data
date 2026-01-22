@@ -1,0 +1,142 @@
+version: 1
+
+# Where your messy folders are:
+input_roots:
+  - "C:/Users/mindy/Desktop/chat_code_dump"
+  - "C:/Users/mindy/Documents/messy_projects"
+
+# Where the cleaned structure will be built:
+output_root: "C:/Users/mindy/Documents/MM_CleanVault"
+
+mode: "copy"   # "copy" or "move"
+
+# Ignore patterns (gitignore-style)
+ignore:
+  - "**/.git/**"
+  - "**/__pycache__/**"
+  - "**/.venv/**"
+  - "**/node_modules/**"
+  - "**/.ipynb_checkpoints/**"
+  - "**/*.tmp"
+  - "**/*.log"
+
+# Deterministic classification: extensions -> category
+extension_map:
+  code:
+    - ".py"
+    - ".js"
+    - ".ts"
+    - ".rs"
+    - ".cpp"
+    - ".c"
+    - ".h"
+    - ".java"
+    - ".go"
+    - ".sh"
+    - ".ps1"
+    - ".ipynb"
+  docs:
+    - ".md"
+    - ".txt"
+    - ".rst"
+    - ".pdf"
+    - ".docx"
+  data:
+    - ".json"
+    - ".yaml"
+    - ".yml"
+    - ".csv"
+    - ".parquet"
+    - ".xml"
+  configs:
+    - ".toml"
+    - ".ini"
+    - ".env"
+
+# Your MM Language awareness signals:
+mm_language:
+  emoji_markers:
+    - "🧠"
+    - "🧬"
+    - "🧩"
+    - "🧿"
+    - "🌀"
+    - "⚛️"
+    - "🔑"
+    - "🧿"
+    - "🌌"
+  operator_markers:
+    - "MindyMethod"
+    - "SpectralMassConstant"
+    - "QuantumLucidity"
+    - "TemporalConsciousnessFactor"
+    - "MemoryCoins"
+    - "Hermetic"
+    - "ExtremeTheory"
+    - "OcularSingularity"
+  hermetic_tags:
+    - "Mentalism"
+    - "Correspondence"
+    - "Vibration"
+    - "Polarity"
+    - "Rhythm"
+    - "CauseAndEffect"
+    - "Gender"
+
+# Project taxonomy: you control your “project awareness”
+# The organizer will route files into these projects using keyword scoring + embeddings
+projects:
+  MM_Language:
+    keywords:
+      - "MM Language"
+      - "emoji"
+      - "operator"
+      - "memory coin"
+      - "hermetic"
+      - "12D"
+      - "vector tagging"
+  Sherlock_AI:
+    keywords:
+      - "sherlock"
+      - "forensics"
+      - "entropy"
+      - "rootkit"
+      - "token"
+      - "session"
+  Mindy_Method_Physics:
+    keywords:
+      - "ocular singularity"
+      - "spectral mass constant"
+      - "modified schrödinger"
+      - "JWST"
+      - "entropy"
+      - "tachyon"
+      - "gravity"
+  Business_Prototypes:
+    keywords:
+      - "prototype"
+      - "3d printer"
+      - "waste management"
+      - "pilot"
+      - "school district"
+      - "kind cups"
+
+# Folder layout template (inside each project)
+layout:
+  src: "01_src"
+  docs: "02_docs"
+  data: "03_data"
+  configs: "04_configs"
+  tests: "05_tests"
+  build: "06_build"
+  scripts: "07_scripts"
+  assets: "08_assets"
+  misc: "99_misc"
+
+# Git behavior (optional)
+git:
+  enabled: true
+  create_repo_per_project: true
+  default_branch: "main"
+  auto_commit: true
+  commit_message: "Organized by mm-organizer"

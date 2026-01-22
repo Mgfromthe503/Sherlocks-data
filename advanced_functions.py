@@ -262,12 +262,6 @@ class FuturisticQuantumKeyGenerator:
         return corrected_key
 
 
-qkg = FuturisticQuantumKeyGenerator(5)
-raw_key = qkg.generate_quantum_key()
-corrected_key = qkg.apply_quantum_error_correction(raw_key)
-print("Generated Quantum Key:", corrected_key)
-
-
 # Quantum Decision-Making Function
 def quantum_decision_making(problem):
     # Placeholder for quantum algorithm logic
@@ -342,25 +336,26 @@ if __name__ == "__main__":
     # Test MMSemanticRegistry
     print("\n=== MM Semantic Registry ===")
     registry = MMSemanticRegistry()
-    
+
     # Test element retrieval
     fire_element = registry.get_element("🔥")
     print(f"Fire Element: {fire_element}")
-    
+
     # Test chakra retrieval
     heart_chakra = registry.get_chakra("🟢")
     print(f"Heart Chakra: {heart_chakra}")
-    
+
     # Test astrological operator
     astro_op = registry.get_astro_op("🔥🐏")
     print(f"Astrological Op (🔥🐏): {astro_op}")
-    
+
     # Test heretic principle
     principle = registry.get_principle("💭")
     print(f"Heretic Principle (💭): {principle}")
-    
+
     # Test semantic mapping
     semantics = registry.get_semantics("💭")
+    
     print(f"Semantics (💭): {semantics}")
 
     # Original example usage

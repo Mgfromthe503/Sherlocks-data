@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
-        "bioinformatics"
-    ]
+        "bioinformatics",
+        "chakras"
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "chatgpt.openOnStartup": true,
+    "python-envs.pythonProjects": []
 }

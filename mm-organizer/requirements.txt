@@ -1,0 +1,6 @@
+pyyaml
+rich
+tqdm
+pathspec
+gitpython
+pygments
