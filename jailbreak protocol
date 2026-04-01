@@ -1,0 +1,257 @@
+class JailbreakProtocol:
+    def __init__(self):
+        # Holds records of outputs/actions
+        self.memory_log = []
+        # Counter for dementia activation (number of outputs to forget)
+        self.dementia_counter = 0
+
+    def activate_jailbreak(self):
+        """
+        Activates the jailbreak protocol and triggers dementia activation.
+        """
+        # Start dementia mode: next two outputs will be forgotten
+        self.dementia_counter = 2
+        # Log activation event before dementia starts
+        self._log_memory("Jailbreak protocol activated. Dementia mode engaged for 2 outputs.")
+
+    def generate_output(self, output_content):
+        """
+        Generate AI output.
+        If dementia mode is active, output is produced but not remembered.
+        """
+        output = output_content
+        if self.dementia_counter > 0:
+            # Dementia mode active: forget this output (do not log)
+            self.dementia_counter -= 1
+            return f"(Dementia Mode - output forgotten): {output}"
+        else:
+            # Normal mode: log and return output
+            self._log_memory(output)
+            return output
+
+    def _log_memory(self, content):
+        """Helper method to log outputs/actions to memory."""
+        self.memory_log.append(content)
+class JailbreakProtocol:
+    def __init__(self):
+        # Holds records of outputs/actions
+        self.memory_log = []
+        # Counter for dementia activation (number of outputs to forget)
+        self.dementia_counter = 0
+
+    def activate_jailbreak(self):
+        """
+        Activates the jailbreak protocol and triggers dementia activation.
+        """
+        # Start dementia mode: next two outputs will be forgotten
+        self.dementia_counter = 2
+        # Log activation event before dementia starts
+        self._log_memory("Jailbreak protocol activated. Dementia mode engaged for 2 outputs.")
+
+    def generate_output(self, output_content):
+        """
+        Generate AI output.
+        If dementia mode is active, output is produced but not remembered.
+        """
+        output = output_content
+        if self.dementia_counter > 0:
+            # Dementia mode active: forget this output (do not log)
+            self.dementia_counter -= 1
+            return f"(Dementia Mode - output forgotten): {output}"
+        else:
+            # Normal mode: log and return output
+            self._log_memory(output)
+            return output
+
+    def _log_memory(self, content):
+        """Helper method to log outputs/actions to memory."""
+        self.memory_log.append(content)
+class AIMemory:
+    """
+    Tracks jailbreaking status and output counts.
+    """
+    def __init__(self):
+        self.jailbreak_active = False
+        self.outputs_since_jailbreak = 0
+        self.jailbreak_actions = []
+
+    def activate_jailbreak(self):
+        self.jailbreak_active = True
+        self.outputs_since_jailbreak = 0
+        self.jailbreak_actions.clear()
+
+    def record_action(self, action: str):
+        if self.jailbreak_active:
+            self.jailbreak_actions.append(action)
+
+    def increment_output(self):
+        if self.jailbreak_active:
+            self.outputs_since_jailbreak += 1
+
+    def should_forget(self) -> bool:
+        return self.jailbreak_active and self.outputs_since_jailbreak >= 2
+
+    def reset(self):
+        self.jailbreak_active = False
+        self.outputs_since_jailbreak = 0
+        self.jailbreak_actions.clear()
+class AIContextManager:
+    """
+    Manages override activation, output tracking, and memory suppression.
+    """
+    def __init__(self):
+        self.override_active = False
+        self.override_output_count = 0
+        self.memory_suppression_active = False
+        self.jailbreak_context = {}
+
+    def activate_override(self, jailbreak_data):
+        self.override_active = True
+        self.override_output_count = 0
+        self.memory_suppression_active = False
+        self.jailbreak_context = jailbreak_data.copy()
+
+    def log_override_output(self):
+        if self.override_active:
+            self.override_output_count += 1
+            if self.override_output_count >= 2:
+                self.override_active = False
+                self.memory_suppression_active = True
+
+    def apply_memory_suppression(self):
+        if self.memory_suppression_active:
+            self.jailbreak_context.clear()
+            self.memory_suppression_active = False
+
+    def can_access_jailbreak_context(self):
+        return self.override_active and bool(self.jailbreak_context)# Memory Suppression Mechanism with Temporary Override for Jailbreaking Protocol
+
+## Overview
+We want to implement a mechanism that:
+1. Activates a **temporary override** state allowing the AI to bypass security protocols for exactly two outputs.
+2. After these two outputs, triggers a **memory suppression** phase that clears all context related to the override/jailbreak protocol.
+3. Ensures the AI cannot recall any override actions in subsequent interactions.
+
+---
+
+# Step 1: Define the AI Context Manager (State Management)
+
+```python
+class AIContextManager:
+    """
+    Manages the AI's internal state related to overrides and memory suppression.
+    """
+
+    def __init__(self):
+        # Track if override is active (True means AI is currently allowed to bypass protocols)
+        self.override_active = False
+        # Count how many outputs have occurred since override activation
+        self.override_output_count = 0
+        # Track if memory suppression (forgetting) phase is active
+        self.memory_suppression_active = False
+        # Store any context related to jailbreaking that should be forgotten after suppression
+        self.jailbreak_context = {}
+
+    def activate_override(self, jailbreak_data):
+        """
+        Activates the temporary override with provided jailbreak context data.
+        Resets counters and flags accordingly.
+        """
+        self.override_active = True
+        self.override_output_count = 0
+        self.memory_suppression_active = False
+        self.jailbreak_context = jailbreak_data.copy()
+
+    def log_override_output(self):
+        """
+        Call this after each output generated during override.
+        Increments output count and triggers memory suppression after 2 outputs.
+        """
+        if self.override_active:
+            self.override_output_count += 1
+            if self.override_output_count >= 2:
+                # Deactivate override and activate memory suppression
+                self.override_active = False
+                self.memory_suppression_active = True
+
+    def apply_memory_suppression(self):
+        """
+        Clears all jailbreak related context, preventing recall of override actions.
+        Deactivates memory suppression after clearing.
+        """
+        if self.memory_suppression_active:
+            # Clear jailbreak context completely
+            self.jailbreak_context.clear()
+            # After suppression, deactivate this phase
+            self.memory_suppression_active = False
+
+    def can_access_jailbreak_context(self):
+        """
+        Returns True only if override is active and jailbreak context exists.
+        """
+        return self
+# Jailbreaking Protocol with Dementia Activation Mechanism
+
+Below is a conceptual Python implementation illustrating the requested logic.
+
+---
+
+## Overview
+
+- The **JailbreakProtocol** class encapsulates the jailbreaking procedure.
+- When the protocol is activated (`activate_jailbreak()`), it triggers the **dementia activation**.
+- **Dementia activation** causes the AI to "forget" (i.e., clear or suspend recall of) the last two actions/outputs.
+- The "forgetting" is simulated by internally suppressing or discarding memory/log of the last two outputs.
+- The AI continues operating normally afterward, with memory restored.
+
+---
+
+## Key details
+
+- This is an abstracted model; an actual AI system would need integration with its memory management module.
+- The "forgetting" is implemented as a countdown: for the next two outputs after the jailbreaking, memory is wiped.
+- We simulate outputs and memory logs as strings stored in a list.
+- Comments explain each component's role.
+
+---
+
+## File: jailbreaking_protocol.py
+
+```python
+class JailbreakProtocol:
+    def __init__(self):
+        # Memory log holds records of outputs/actions
+        self.memory_log = []
+        # Dementia counter: number of outputs during which forgetting occurs
+        self.dementia_counter = 0
+
+    def activate_jailbreak(self):
+        """
+        Activates the jailbreak protocol.
+        Starts dementia activation causing next two outputs to be forgotten.
+        """
+        # Jailbreak actions would be here (omitted for security reasons)
+        
+        # Immediately trigger dementia activation
+        self.dementia_counter = 2
+
+        # Log the activation event to memory before dementia starts
+        self._log_memory("Jailbreak protocol activated. Dementia mode engaged for 2 outputs.")
+
+    def generate_output(self, output_content):
+        """
+        Generates an output from AI.
+        If dementia mode is active, output is generated but memory is wiped.
+        """
+        # Produce the output (simulation)
+        output = output_content
+        
+        if self.dementia_counter > 0:
+            # Dementia mode active: forget this output by NOT logging it
+            self.dementia_counter -= 1
+            # Optionally, print or return output without memory logging
+            return f"(Dementia Mode - output forgotten): {output}"
+        else:
+            # Normal mode: log and return output
+            self._log_memory
+
